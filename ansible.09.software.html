@@ -1,0 +1,8 @@
+<h1 id="software-repositories">Software Repositories</h1>
+<h2 id="reference-info">Reference Info</h2>
+<ul>
+<li><a href="https://docs.ansible.com/ansible/latest/modules/yum_repository_module.html#yum-repository-module">yum_repository – Add or remove YUM repositories</a></li>
+</ul>
+<h2 id="tasks">Tasks</h2>
+<p>Create a playbook <em>repository.yml</em> that runs on servers in the <strong>database</strong> host group and does the following: * A YUM repository file is created. * The name of the repository is <strong>mysql56-community</strong>. * The description of the repository is “MySQL 5.6 YUM Repo”. * Repository baseurl is <strong>http://repo.mysql.com/yum/mysql-5.6-community/el/7/x86_64/</strong>. * Repository GPG key is at <strong>http://repo.mysql.com/RPM-GPG-KEY-mysql</strong>. * Repository GPG check is enabled. * Repository is enabled.</p>
+<p>Run the playbook and provide the output in the text file to the tutor. Provide all files you've created as well.</p>

@@ -1,0 +1,19 @@
+<h1 id="configure-ssh-server">Configure SSH server</h1>
+<h2 id="reference-info">Reference Info</h2>
+<ul>
+<li><a href="https://linux.die.net/man/5/sshd_config">sshd_config</a></li>
+<li><a href="https://docs.ansible.com/ansible/latest/modules/lineinfile_module.html#lineinfile-module">lineinfile – Manage lines in text files</a></li>
+<li><a href="https://docs.ansible.com/ansible/latest/modules/service_module.html#service-module">service – Manage services</a></li>
+<li><a href="https://docs.ansible.com/ansible/latest/modules/shell_module.html#shell-module">shell – Execute shell commands on targets</a></li>
+</ul>
+<h2 id="tasks">Tasks</h2>
+<ul>
+<li>Create a playbook <em>sshd.yml</em> that runs on all inventory hosts and configures SSHD daemon as follows:
+<ul>
+<li>banner is set to <em>/etc/motd</em></li>
+<li>X11Forwarding is disabled</li>
+<li>MaxAuthTries is set to 3</li>
+<li>Restart daemon</li>
+</ul></li>
+</ul>
+<p>Run the playbook and provide the output in the text file to the tutor. Provide all files you've created as well.</p>

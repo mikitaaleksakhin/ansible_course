@@ -1,0 +1,55 @@
+<h1 id="work-with-ansible-facts">Work with Ansible Facts</h1>
+<h2 id="reference-info">Reference Info</h2>
+<ul>
+<li><a href="https://docs.ansible.com/ansible/latest/user_guide/playbooks.html">Working With Playbooks</a></li>
+<li><a href="https://docs.ansible.com/ansible/latest/user_guide/playbooks_conditionals.html">Conditionals</a></li>
+<li><a href="https://docs.ansible.com/ansible/latest/reference_appendices/special_variables.html">Special Variables</a></li>
+<li><a href="https://docs.ansible.com/ansible/devel/user_guide/playbooks_vars_facts.html#discovering-variables-facts-and-magic-variables">Discovering variables: facts and magic variables</a></li>
+<li><a href="https://docs.ansible.com/ansible/latest/cli/ansible-playbook.html">ansible-playbook</a></li>
+</ul>
+<h2 id="info">Info</h2>
+<p>While ad-hoc commands are useful for testing and simple one-off tasks, playbooks can be used to capture a set of repeatable tasks to run in the future. A playbook contains one or more plays which define a set of hosts to configure and a list of tasks to be performed.</p>
+<h3 id="ansible-variables">Ansible variables</h3>
+<ul>
+<li>Review on <a href="https://docs.ansible.com/ansible/latest/user_guide/playbooks_variables.html">naming</a> convention</li>
+<li>Some more places to define <a href="https://docs.ansible.com/ansible/latest/user_guide/playbooks_variables.html#using-variables">variables</a>:
+<ul>
+<li>vars, vars_files, vars_prompt</li>
+<li>Command line: ansible-playbook play.yml -e '{&quot;my_var&quot;:&quot;my_val&quot;}'</li>
+<li>Roles, blocks, inventories.</li>
+</ul></li>
+<li>A note on <a href="https://docs.ansible.com/ansible/latest/user_guide/playbooks_variables.html#hey-wait-a-yaml-gotcha">quotes</a></li>
+</ul>
+<h3 id="dictionary-variables">Dictionary variables</h3>
+<ul>
+<li>Yaml fomatting allows for python style dictionaries to be used as variables</li>
+<li>There are two fomats to access dictionary values:
+<ul>
+<li>employee['name']</li>
+<li>employee.name The bracket syntax is safer as the dot notation can hae collisions with python incertain circumstances</li>
+</ul></li>
+</ul>
+<h3 id="magic-variables-and">Magic variables and</h3>
+<p>Ansible defines several special variables knowns as <a href="https://docs.ansible.com/ansible/latest/reference_appendices/special_variables.html#magic">magic variables</a> The most <a href="https://docs.ansible.com/ansible/latest/reference_appendices/special_variables.html#magic">commonly used magic variables</a>: * hostvars * groups * group_names * inventory_hostname You can use <a href="https://jinja.palletsprojects.com/en/2.10.x/templates/">Jinja2 filters</a> to manipulate text fomat</p>
+<h3 id="what-are-facts">What are facts</h3>
+<p><strong>Facts</strong> are infomation discovered by Ansible about a target system. There are two ways facts are collected: * Using the setup module with an ad-hoc command: ansible all -m setup * Facts are gathered by default when a playbook is executed You can disable Fact Gathering in playbooks using the <em>gather</em>facts_ attribute</p>
+<h3 id="how-to-use-facts">How to use facts</h3>
+<ul>
+<li>Any collected facts may be accessed though variables: {{ ansible_default_ipv4.address }}</li>
+<li>It is possible to use filters with regex, in ad-hoc mode, to match certain fact names</li>
+<li>Facts may also be used with conditionals to have plays behave differently on hosts that meet certain criteria</li>
+</ul>
+<h3 id="facts.d---custom-facts">Facts.d - custom facts</h3>
+<ul>
+<li>It is possible to define custom facts on your servers using the facts.d directory</li>
+<li>Create /etc/ansible/facts.d directory on target system. All valid files withib this directory ending in .fact are returnes under <em>ansible</em>local_ with facts</li>
+<li>Fact file may be INI, JSON, or an executable that returns JSON</li>
+</ul>
+<h2 id="tasks">Tasks</h2>
+<ol style="list-style-type: decimal">
+<li>Create a playbook <em>facts.yml</em> that runs on hosts in the <strong>database</strong> host group and does the following:
+<ul>
+<li>A custom Ansible fact <em>server</em>role=mysql_ is created that can be retrieved from ansible_local.custom.role when using Ansible setup module.</li>
+</ul></li>
+</ol>
+<p>Run the playbook and provide the output in the text file to the tutor. Provide facts.yml file as well.</p>

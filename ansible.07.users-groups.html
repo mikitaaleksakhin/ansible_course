@@ -1,0 +1,20 @@
+<h1 id="users-and-groups">Users and groups</h1>
+<h2 id="reference-info">Reference Info</h2>
+<ul>
+<li><a href="https://docs.ansible.com/ansible/latest/user_guide/vault.html">Ansible Vault</a></li>
+<li><a href="https://docs.ansible.com/ansible/latest/user_guide/playbooks_vault.html#using-vault-in-playbooks">Using Vault in playbooks</a></li>
+<li><a href="https://docs.ansible.com/ansible/latest/user_guide/playbooks_variables.html">Using Variables</a></li>
+<li><a href="https://docs.ansible.com/ansible/latest/user_guide/playbooks_loops.html">Loops</a></li>
+<li><a href="https://docs.ansible.com/ansible/latest/plugins/lookup/items.html">items – list of items</a></li>
+<li><a href="https://docs.ansible.com/ansible/latest/user_guide/playbooks_conditionals.html">Conditionals</a></li>
+<li><a href="https://docs.ansible.com/ansible/latest/user_guide/playbooks_filters.html#hashing-filters">Hashing filters</a></li>
+<li><a href="https://docs.ansible.com/ansible/latest/user_guide/playbooks_filters.html#id8">Other Useful Filters</a></li>
+<li><a href="https://docs.ansible.com/ansible/latest/modules/user_module.html#user-module">user – Manage user accounts</a></li>
+<li><a href="https://docs.ansible.com/ansible/latest/modules/group_module.html#group-module">group – Add or remove groups</a></li>
+</ul>
+<h2 id="tasks">Tasks</h2>
+<ol style="list-style-type: decimal">
+<li>Use <em>vars/user</em>list.yml_ file to save this content.</li>
+</ol>
+<p><code>yaml--- users: - username: alice   uid: 1201 - username: vincent   uid: 1202 - username: sandy   uid: 2201 - username: patrick   uid: 2202 - username: jack   uid: 11111 - username: david   uid: 22222</code> 2. Create a playbook <em>users.yml</em> that uses the vault file <em>secret.yml</em> to achieve the following: 1. Users whose user ID starts with 1 should be created on servers in the <strong>webservers</strong> host group. User password should be used from the <strong>user_password</strong> variable. 2. Users whose user ID starts with 2 should be created on servers in the <strong>database</strong> host group. User password should be used from the <strong>user_password</strong> variable. 3. All users should be members of a supplementary group <strong>wheel</strong>. 4. Shell should be set to <em>/bin/bash</em> for all users. 5. Account passwords should use the SHA512 hash format. 6. Each user should have an SSH key uploaded (use the SSH key that you created previously, see task #2).</p>
+<p>Run the playbook and provide the output in the text file to the tutor. Provide all files you've created as well.</p>

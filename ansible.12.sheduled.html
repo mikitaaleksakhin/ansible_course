@@ -1,0 +1,21 @@
+<h1 id="scheduled-tasks">Scheduled tasks</h1>
+<h2 id="reference-info">Reference Info</h2>
+<ul>
+<li><a href="https://docs.ansible.com/ansible/latest/modules/cron_module.html#cron-module">cron – Manage cron.d and crontab entries</a></li>
+<li><a href="https://docs.ansible.com/ansible/latest/modules/file_module.html#file-module">file – Manage files and file properties</a></li>
+<li><a href="https://docs.ansible.com/ansible/latest/collections/ansible/posix/at_module.html">at – Schedule the execution of a command or script file via the at command</a></li>
+</ul>
+<h2 id="tasks">Tasks</h2>
+<ol style="list-style-type: decimal">
+<li>Create a playbook <em>regular_tasks.yml</em> that runs on servers in the <strong>proxy</strong> host group and does the following:
+<ul>
+<li>A root crontab record is created that runs every hour.</li>
+<li>The cron job appends the file <em>/var/log/time.log</em> with the output from the <strong>date</strong> command.</li>
+</ul></li>
+<li>Create a playbook <em>at_tasks</em> that runs on servers in the <strong>database</strong> host group and does the following:
+<ul>
+<li>Make sure <em>at</em> package is installed and <em>atd</em> service is running</li>
+<li>An at task for root is created that checks disk space (df -h) and saves result in <em>/tmp/diskspace</em>. Task should be started in 20 minutes.</li>
+</ul></li>
+</ol>
+<p>Run playbooks, make sure both jobs (cron and at) exist, and provide the output in the text file to the tutor. Provide all files you've created as well.</p>

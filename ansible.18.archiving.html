@@ -1,0 +1,11 @@
+<h1 id="use-archiving">Use Archiving</h1>
+<h2 id="reference-info">Reference Info</h2>
+<ul>
+<li><a href="https://docs.ansible.com/ansible/latest/modules/archive_module.html#archive-module">archive – Creates a compressed archive of one or more files or trees</a></li>
+<li><a href="https://docs.ansible.com/ansible/latest/modules/unarchive_module.html#unarchive-module">unarchive – Unpacks an archive after (optionally) copying it from the local machine</a></li>
+<li><a href="https://docs.ansible.com/ansible/latest/modules/lineinfile_module.html#lineinfile-module">lineinfile – Manage lines in text files</a></li>
+<li><a href="https://docs.ansible.com/ansible/latest/modules/fetch_module.html">fetch – Fetch files from remote nodes</a></li>
+</ul>
+<h2 id="tasks">Tasks</h2>
+<p>Create a playbook <em>archive.yml</em> that runs on hosts in the <strong>database</strong> host group and does the following: * A file <em>/mnt/mysql</em>backups/database_list.txt_ is created that contains the following line: dev,test,qa,prod. * A gzip archive of the file <em>/mnt/mysql</em>backups/database_list.txt_ is created and stored in <em>/mnt/mysql</em>backups/archive.gz_. * Copy archive to the /home/ansible/ on controle node and unarchive.</p>
+<p>Run the playbook and provide the output in the text file to the tutor. Provide all files you've created as well.</p>

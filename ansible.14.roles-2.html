@@ -1,0 +1,29 @@
+<h1 id="create-and-work-with-roles-error-handling-templates-ansible-facts">Create and work with roles (error handling, templates, ansible facts)</h1>
+<h2 id="reference-info">Reference Info</h2>
+<ul>
+<li><a href="https://docs.ansible.com/ansible/latest/user_guide/playbooks_reuse_roles.html">Roles</a></li>
+<li><a href="https://docs.ansible.com/ansible/latest/modules/service_module.html">service – Manage services</a></li>
+<li><a href="https://docs.ansible.com/ansible/latest/modules/firewalld_module.html#firewalld-module">firewalld – Manage arbitrary ports/services with firewalld</a></li>
+<li><a href="https://docs.ansible.com/ansible/latest/modules/template_module.html#template-module">template – Template a file out to a remote server</a></li>
+<li><a href="https://docs.ansible.com/ansible/latest/user_guide/playbooks_error_handling.html">Error Handling In Playbooks</a></li>
+<li><a href="https://docs.ansible.com/ansible/latest/user_guide/playbooks_intro.html#handlers-running-operations-on-change">Handlers: Running Operations On Change</a></li>
+</ul>
+<h2 id="tasks">Tasks</h2>
+<ol style="list-style-type: decimal">
+<li>Create a role called <strong>sapache</strong> and store it in <em>roles/</em>. The role should satisfy the following requirements:
+<ul>
+<li>The <strong>httpd</strong>, <strong>mod_ssl</strong>, <strong>php</strong>, <strong>firewalld</strong> packages are installed.</li>
+<li>Apache service is running and enabled on boot.</li>
+<li>Firewall is configured to allow all incoming traffic on HTTP port TCP 80 and HTTPS port TCP 443.</li>
+<li><p>Apache service should be restarted every time the file <em>/var/www/html/index.html</em> is modified. A Jinja2 template file index.html.j2 is used to create the file <em>/var/www/html/index.html</em> with the following content:</p>
+<pre class="bsh"><code>Hello from HOSTNAME IPV4ADDRESS
+DISTRIBUTION is my OS</code></pre>
+<p><strong>HOSTNAME</strong> is the hostname of the mnaged node (pay attention to <a href="https://docs.ansible.com/ansible/latest/reference_appendices/special_variables.html">special variables</a>)</p></li>
+</ul></li>
+</ol>
+<p><strong>IPV4ADDRESS</strong> is the IP address of the managed node (pay attention to <a href="https://docs.ansible.com/ansible/devel/user_guide/playbooks_vars_facts.html#ansible-facts">ansible facts</a>)</p>
+<p><strong>DISTRIBUTION</strong> is the OS name of the managed node (pay attention to <a href="https://docs.ansible.com/ansible/devel/user_guide/playbooks_vars_facts.html#ansible-facts">ansible facts</a>)</p>
+<ol start="2" style="list-style-type: decimal">
+<li>Create a playbook <em>apache.yml</em> that uses the role and runs on hosts in the <strong>webservers</strong> host group.</li>
+</ol>
+<p>Run the playbook and provide the output in the text file to the tutor. Provide all files you've created as well.</p>

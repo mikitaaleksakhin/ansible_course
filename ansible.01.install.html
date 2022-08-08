@@ -1,0 +1,39 @@
+<h1 id="ansible-installation-and-configuration">Ansible Installation and configuration</h1>
+<h2 id="reference-info">Reference Info</h2>
+<ul>
+<li><a href="https://docs.ansible.com/ansible/latest/user_guide/basic_concepts.html">Ansible concepts</a></li>
+<li><a href="https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#installation-guide">Installation guide</a></li>
+<li><a href="https://docs.ansible.com/ansible/latest/installation_guide/intro_configuration.html">Configuring Ansible</a></li>
+</ul>
+<h2 id="info">Info</h2>
+<h3 id="definitions">Definitions:</h3>
+<ul>
+<li><strong>Tasks</strong>: A task is the smallest unit of work. It can be an action like “Install a database,” “Install a web server,” “Create a firewall rule,” or “Copy this configuration file to that server.”</li>
+<li><strong>Plays</strong>: A play is made up of tasks. For example, the play: “Prepare a database to be used by a web server” is made up of tasks: 1) Install the database package; 2) Set a password for the database administrator; 3) Create a database; and 4) Set access to the database.</li>
+<li><strong>Playbook</strong>: A playbook is made up of plays. A playbook could be: “Prepare my website with a database backend,” and the plays would be 1) Set up the database server; and 2) Set up the web server.</li>
+<li><strong>Roles</strong>: Roles are used to save and organize playbooks and allow sharing and reuse of playbooks. Following the previous examples, if you need to fully configure a web server, you can use a role that others have written and shared to do just that. Since roles are highly configurable (if written correctly), they can be easily reused to suit any given deployment requirements.</li>
+<li><strong>Ansible Galaxy</strong>: Ansible Galaxy is an online repository where roles are uploaded so they can be shared with others. It is integrated with GitHub, so roles can be organized into Git repositories and then shared via Ansible Galaxy.</li>
+</ul>
+<h3 id="tips-for-writing-playbooks">Tips for writing playbooks</h3>
+<p>The best source for learning Ansible is the official documentation site. And, as usual, online search is your friend. Once you are ready, follow these guidelines: * When testing, use a small subset of servers so that your plays execute faster. If they are successful in one server, they will be successful in others. * Always do a dry run to make sure all commands are working (run with --check-mode flag). * Test as often as you need to without fear of breaking things. Tasks describe a desired state, so if a desired state is already achieved, it will simply be ignored. * Be sure all host names defined in /etc/ansible/hosts (or your custom inventory file) are resolvable. * Because communication to remote hosts is done using SSH, keys have to be accepted by the control machine, so either 1) exchange keys with remote hosts prior to starting; or 2) be ready to type in “Yes” to accept SSH key exchange requests for each remote host you want to manage. * Although you can combine tasks for different Linux distributions in one playbook, it’s cleaner to write a separate playbook for each distro.</p>
+<h2 id="tasks">Tasks</h2>
+<ol style="list-style-type: decimal">
+<li><p>Install ansible package on the control node. Create a regular user <strong>ansible</strong> with the password of <strong>devops</strong>. Use this user for all tasks and playbooks. All playbooks and other Ansible configuration that you create should be stored in <em>/home/ansible/plays</em>.</p></li>
+<li>Create a configuration file <em>ansible.cfg</em> to meet the following requirements:
+<ol style="list-style-type: decimal">
+<li>The roles path should include <em>/home/ansible/plays/roles</em>.</li>
+<li>The inventory file path is <em>/home/ansible/plays/inventory</em>.</li>
+<li>Privilege escallation is <strong>disabled</strong> by default.</li>
+<li>Ansible should be able to manage <strong>10 hosts</strong> at a single time.</li>
+<li>Ansible should connect to all managed nodes using the <strong>ansible</strong> user.</li>
+<li>Increase the default timeout to 60 seconds by default for Ansible</li>
+</ol></li>
+<li>Create an inventory file <em>inventory</em> with the following:
+<ol style="list-style-type: decimal">
+<li>ansible-2 is a member of the <strong>proxy</strong> host group.</li>
+<li>ansible-3 is a member of the <strong>webservers</strong> host group.</li>
+<li>ansible-4 is a member of the <strong>webservers</strong> host group.</li>
+<li>ansible-5 is a member of the <strong>database</strong> host group.</li>
+</ol></li>
+</ol>
+<p>Provide ansible.cfg and inventory files to the tutor.</p>

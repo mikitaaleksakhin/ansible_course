@@ -1,0 +1,12 @@
+<h1 id="use-conditionals-to-control-play-execution">Use Conditionals to Control Play Execution</h1>
+<h2 id="reference-info">Reference Info</h2>
+<ul>
+<li><a href="https://docs.ansible.com/ansible/latest/user_guide/playbooks_conditionals.html#conditionals">Conditionals</a></li>
+<li><a href="https://docs.ansible.com/ansible/latest/modules/sysctl_module.html#sysctl-manage-entries-in-sysctl-conf">sysctl – Manage entries in sysctl.conf</a></li>
+<li><a href="https://docs.ansible.com/ansible/latest/modules/debug_module.html#debug-module">debug – Print statements during execution</a></li>
+<li><a href="https://docs.ansible.com/ansible/latest/user_guide/playbooks_variables.html#variables-discovered-from-systems-facts">Variables discovered from systems: Facts</a></li>
+</ul>
+<h2 id="tasks">Tasks</h2>
+<p>Create a playbook <em>sysctl.yml</em> that runs on all inventory hosts and does the following: * If a server has more than 2048MB of RAM, then parameter <em>vm.swappiness</em> is set to 10. * If a server has less than 2048MB of RAM, then the following error message is displayed:</p>
+<pre><code>Server memory less than 2048MB</code></pre>
+<p>Run the playbook and provide the output in the text file to the tutor. Provide sysctl.yml file as well.</p>

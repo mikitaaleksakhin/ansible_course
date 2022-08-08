@@ -1,0 +1,99 @@
+<p>Environment configuration (Win): 1. Install vagrant https://www.vagrantup.com/docs/installation 2. Create folder ansible and sub-folders boxes and plays (ex. D:-ibaand D:-iba) and copy Vagrantfile into ansible</p>
+<p><em>boxes</em> will be used to sore Vagrant configs.</p>
+<p>You can use plays <em>folder</em> as shared (synced) folder, it will be mounted to the /sync directory</p>
+<pre class="sourceCode ruby"><code class="sourceCode ruby"><span class="co"># -*- mode: ruby -*-</span>
+<span class="co"># vi: set ft=ruby :</span>
+
+
+<span class="co"># All Vagrant configuration is done below. The &quot;2&quot; in Vagrant.configure</span>
+<span class="co"># configures the configuration version (we support older styles for</span>
+<span class="co"># backwards compatibility). Please don&#39;t change it unless you know what</span>
+<span class="co"># you&#39;re doing.</span>
+<span class="dt">Vagrant</span>.configure(<span class="st">&quot;2&quot;</span>) <span class="kw">do</span> |config|
+
+
+  servers=[
+    {
+      <span class="st">:hostname</span> =&gt; <span class="st">&quot;ansible-control&quot;</span>,
+      <span class="st">:box</span> =&gt; <span class="st">&quot;generic/centos7&quot;</span>,
+      <span class="st">:ip</span> =&gt; <span class="st">&quot;192.168.33.10&quot;</span>,
+      <span class="st">:ssh_port</span> =&gt; <span class="st">&#39;2210&#39;</span>
+    },
+    {
+      <span class="st">:hostname</span> =&gt; <span class="st">&quot;ansible-2&quot;</span>,
+      <span class="st">:box</span> =&gt; <span class="st">&quot;generic/centos7&quot;</span>,
+      <span class="st">:ip</span> =&gt; <span class="st">&quot;192.168.33.11&quot;</span>,
+      <span class="st">:ssh_port</span> =&gt; <span class="st">&#39;2211&#39;</span>
+    },
+    {
+      <span class="st">:hostname</span> =&gt; <span class="st">&quot;ansible-3&quot;</span>,
+      <span class="st">:box</span> =&gt; <span class="st">&quot;generic/centos7&quot;</span>,
+      <span class="st">:ip</span> =&gt; <span class="st">&quot;192.168.33.12&quot;</span>,
+      <span class="st">:ssh_port</span> =&gt; <span class="st">&#39;2212&#39;</span>
+    },
+    {
+      <span class="st">:hostname</span> =&gt; <span class="st">&quot;ansible-4&quot;</span>,
+      <span class="st">:box</span> =&gt; <span class="st">&quot;generic/centos7&quot;</span>,
+      <span class="st">:ip</span> =&gt; <span class="st">&quot;192.168.33.13&quot;</span>,
+      <span class="st">:ssh_port</span> =&gt; <span class="st">&#39;2213&#39;</span>
+    },
+    {
+      <span class="st">:hostname</span> =&gt; <span class="st">&quot;ansible-5&quot;</span>,
+      <span class="st">:box</span> =&gt; <span class="st">&quot;generic/centos7&quot;</span>,
+      <span class="st">:ip</span> =&gt; <span class="st">&quot;192.168.33.14&quot;</span>,
+      <span class="st">:ssh_port</span> =&gt; <span class="st">&#39;2214&#39;</span>
+    }
+
+
+  ]
+
+
+  servers.each <span class="kw">do</span> |machine|
+
+
+    config.vm.define machine[<span class="st">:hostname</span>] <span class="kw">do</span> |node|
+      node.vm.box = machine[<span class="st">:box</span>]
+      node.vm.hostname = machine[<span class="st">:hostname</span>]
+    
+      node.vm.network <span class="st">:private_network</span>, ip: machine[<span class="st">:ip</span>]
+      node.vm.network <span class="st">&quot;forwarded_port&quot;</span>, guest: <span class="dv">22</span>, host: machine[<span class="st">:ssh_port</span>], id: <span class="st">&quot;ssh&quot;</span>
+
+
+      node.vm.provider <span class="st">:virtualbox</span> <span class="kw">do</span> |v|
+        v.customize [<span class="st">&quot;modifyvm&quot;</span>, <span class="st">:id</span>, <span class="st">&quot;--memory&quot;</span>, <span class="dv">512</span>]
+        v.customize [<span class="st">&quot;modifyvm&quot;</span>, <span class="st">:id</span>, <span class="st">&quot;--name&quot;</span>, machine[<span class="st">:hostname</span>]]
+      
+        <span class="kw">if</span> machine[<span class="st">:hostname</span>] == <span class="st">&quot;ansible-5&quot;</span>
+          file_to_disk = <span class="st">&#39;disk2.vdi&#39;</span>
+          <span class="kw">unless</span> <span class="dt">File</span>.exist?(file_to_disk)
+            v.customize [<span class="st">&#39;createhd&#39;</span>, <span class="st">&#39;--filename&#39;</span>, file_to_disk, <span class="st">&#39;--size&#39;</span>, <span class="dv">1000</span> * <span class="dv">1024</span>]
+          <span class="kw">end</span>
+          v.customize [<span class="st">&#39;storageattach&#39;</span>, <span class="st">:id</span>, <span class="st">&#39;--storagectl&#39;</span>, <span class="st">&#39;IDE Controller&#39;</span>, <span class="st">&#39;--port&#39;</span>, <span class="dv">1</span>, <span class="st">&#39;--device&#39;</span>, <span class="dv">0</span>, <span class="st">&#39;--type&#39;</span>, <span class="st">&#39;hdd&#39;</span>, <span class="st">&#39;--medium&#39;</span>, file_to_disk]
+        <span class="kw">end</span>  
+      <span class="kw">end</span>
+      
+      <span class="kw">if</span> machine[<span class="st">:hostname</span>] == <span class="st">&quot;ansible-control&quot;</span>
+        config.vm.synced_folder <span class="st">&quot;../../plays&quot;</span>, <span class="st">&quot;/sync&quot;</span>
+      <span class="kw">end</span>
+      
+    <span class="kw">end</span>
+  <span class="kw">end</span>
+
+
+  id_rsa_key_pub = <span class="dt">File</span>.read(<span class="dt">File</span>.join(<span class="dt">Dir</span>.home, <span class="st">&quot;.ssh&quot;</span>, <span class="st">&quot;id_rsa.pub&quot;</span>))
+
+
+  config.vm.provision <span class="st">:shell</span>,
+        <span class="st">:inline</span> =&gt; <span class="st">&quot;echo &#39;appending SSH public key to ~vagrant/.ssh/authorized_keys&#39; &amp;&amp; echo &#39;</span><span class="ot">#{</span>id_rsa_key_pub <span class="ot">}</span><span class="st">&#39; &gt;&gt; /home/vagrant/.ssh/authorized_keys &amp;&amp; chmod 600 /home/vagrant/.ssh/authorized_keys&quot;</span>
+
+
+  config.ssh.insert_key = <span class="dv">false</span>
+  
+<span class="kw">end</span></code></pre>
+<ol start="3" style="list-style-type: decimal">
+<li>Run cmd, cd to ansible folder and run vagrant up</li>
+<li>Login to control node (ansible-control), generate ssh key and copy public key for managed nodes (ansible-2,ansible-3,ansible-4,ansible-5) ```cmd vagrant ssh ansible-control sudo su - # ssh-keygen -t rsa cat ~/.ssh/id_rsa.pub #copy output</li>
+</ol>
+<h1 id="do-the-following-for-all-control-nodes">do the following for all control nodes</h1>
+<p>vagrant ssh ansible-2<br />sudo su - mkdir .ssh; touch authorized_keys; echo 'ANSIBLE-CONTROL-KEY' &gt; .ssh/authorized_keys ```</p>
+<p>After configuration ansible-control server should have passwordless SSH access to all managed servers (using the root user).</p>

@@ -1,0 +1,21 @@
+<h1 id="file-content">File content</h1>
+<h2 id="reference-info">Reference Info</h2>
+<ul>
+<li><a href="https://docs.ansible.com/ansible/latest/user_guide/playbooks.html">Working With Playbooks</a></li>
+<li><a href="https://docs.ansible.com/ansible/latest/user_guide/playbooks_conditionals.html">Conditionals</a></li>
+<li><a href="https://docs.ansible.com/ansible/latest/reference_appendices/special_variables.html">Special Variables</a></li>
+<li><a href="https://docs.ansible.com/ansible/latest/modules/copy_module.html#copy-module">copy – Copy files to remote locations</a></li>
+</ul>
+<h2 id="tasks">Tasks</h2>
+<ol style="list-style-type: decimal">
+<li>Create a playbook <em>motd.yml</em> that runs on all inventory hosts and does the following:
+<ul>
+<li>Replace any existing content of <em>/etc/motd</em> with text. Text depends on the host group:
+<ul>
+<li>On hosts in the <em>proxy</em> host group the line should be <em>“Welcome to HAProxy server”</em>.</li>
+<li>On hosts in the <em>webservers</em> host group the line should be <em>“Welcome to Apache server”</em>.</li>
+<li>On hosts in the <em>database</em> host group the line should be <em>“Welcome to MySQL server”</em>.</li>
+</ul></li>
+</ul></li>
+</ol>
+<p>Run the playbook and provide the output in the text file to the tutor. Provide motd.yml file as well.</p>

@@ -1,0 +1,35 @@
+<h1 id="create-and-use-templates">Create and use templates</h1>
+<h2 id="reference-info">Reference Info</h2>
+<ul>
+<li><a href="https://docs.ansible.com/ansible/latest/modules/template_module.html#template-module">template – Template a file out to a remote server</a></li>
+</ul>
+<h2 id="tasks">Tasks</h2>
+<ol style="list-style-type: decimal">
+<li>Create a playbook <em>server</em>list.yml_ that does the following:
+<ol style="list-style-type: decimal">
+<li>Playbook uses a Jinja2 template <em>server</em>list.j2_ to create a file <em>/etc/server</em>list.txt_ on hosts in the <strong>database</strong> host group.</li>
+<li>The file <em>/etc/server</em>list.txt_ is owned by the <em>ansible</em> user.</li>
+<li>File permissions are set to 0600.</li>
+<li>SELinux file label should be set to net_conf_t.</li>
+<li>The content of the file is a list of FQDNs of all inventory hosts.</li>
+</ol>
+<p>After running the playbook, the content of the file /etc/server_list.txt should be the following:</p>
+<pre class="txt"><code>ansible-2
+ansible-3
+ansible-4
+ansible-5</code></pre>
+<p>Note: if the FQDN of any inventory host changes, re-running the playbook should update the file with the new values.</p>
+<ol start="6" style="list-style-type: decimal">
+<li>Run tha playbook and ensure the files are correctly deployed</li>
+</ol></li>
+<li>Create a playbook <em>sudoers.yml</em> that does the following:
+<ol style="list-style-type: decimal">
+<li>Playbook uses the template module to deploy a Jinja2 template <em>sudoers.j2</em> on all servers after validating the syntax of the generated file</li>
+<li>Create a template sudoers file in sudoers.j2 that produces a file with appropriate output for each host: <code>bash     %sysops &lt;SERVER_IP&gt; = (ALL) ALL     Host_Alias WEBSERVERS = &lt;server1, server2&gt;     Host_Alias DBSERVERS = &lt;serverA&gt;     %httpd WEBSERVERS = /bin/su - webuser     %dba DBSERVERS = /bin/su - dbuser</code> SERVER_IP - IP address of the managed host server1, server2 - servers of group webservers serverA - server of group database</li>
+</ol>
+<p>Command for validation: /sbin/visudo -cf <filename></p>
+<ol start="3" style="list-style-type: decimal">
+<li>Run tha playbook and ensure the files are correctly deployed</li>
+</ol></li>
+</ol>
+<p>Provide the output in the text file to the tutor. Provide all files you've created as well.</p>

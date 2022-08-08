@@ -1,0 +1,10 @@
+<h1 id="work-with-ansible-galaxy">Work with Ansible Galaxy</h1>
+<h2 id="reference-info">Reference Info</h2>
+<ul>
+<li><a href="https://docs.ansible.com/ansible/latest/cli/ansible-galaxy.html">ansible-galaxy cli</a></li>
+<li><a href="https://docs.ansible.com/ansible/latest/galaxy/user_guide.html#galaxy-user-guide">Galaxy User Guide</a></li>
+</ul>
+<h2 id="tasks">Tasks</h2>
+<p>Use Ansible Galaxy to download and install geerlingguy.haproxy role in <em>roles/</em>. Create a playbook <em>haproxy.yml</em> that runs on servers in the <strong>proxy</strong> host group and does the following: * Use geerlingguy.haproxy role to load balance request between hosts in the <strong>webservers</strong> host group. * Use roundrobin load balancing method. * HAProxy backend servers should be configured for HTTP only (port 80). * Firewall is configured to allow all incoming traffic on port TCP 80.</p>
+<p>If your playbook works, then doing “curl http://ansible-2/” should return output from the web server (see task #14). Running the command again should return output from the other web server.</p>
+<p>Run the playbook and provide the output in the text file to the tutor. Provide all files you've created as well.</p>

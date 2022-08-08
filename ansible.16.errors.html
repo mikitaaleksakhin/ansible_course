@@ -1,0 +1,10 @@
+<h1 id="section"></h1>
+<h2 id="reference-info">Reference Info</h2>
+<ul>
+<li><a href="https://docs.ansible.com/ansible/latest/user_guide/playbooks_error_handling.html">Error handling in playbooks</a></li>
+<li><a href="https://docs.ansible.com/ansible/latest/user_guide/playbooks_blocks.html#handling-errors-with-blocks">Handling errors with blocks</a></li>
+</ul>
+<h2 id="tasks">Tasks</h2>
+<p>Create a playbook <em>html.yml</em> that does the following: * Playbook downloads http://INVENTOY_HOSTNAME/index.html on localhost. Do it 2 times: 1. Use <em>ignore</em>errors_ to avoid playbook failure. Download file to /home/ansible/INVENTORY_HOSTNAME-1 2. Use <em>block</em> to avoid failure: 1. Output &quot;File downloaded&quot; if attempt succed 2. Configure the playbook to handle failure by outputting &quot;The file doesn't exists!&quot; 3. Configure the playbook to output &quot;Attempt completed&quot; to stdout whether it was successful or not</p>
+<pre><code>   Download file to /home/ansible/INVENTORY_HOSTNAME-2</code></pre>
+<p>Run the playbook and provide the output in the text file to the tutor. Provide all files you've created as well.</p>
